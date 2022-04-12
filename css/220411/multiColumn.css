@@ -1,0 +1,13 @@
+.container {
+  /* 지정한 대로 되진 않고 브라우저가 자동으로 최적화를 시킨다. */
+  column-count: 3;
+  column-width: 100px;
+  column-gap: 20px;
+  /* (기본값) normal == 1em */
+
+  column-rule: 1px solid;
+  /* border 값입력이랑 같음 
+  색을 따로 지정하지 않으면 기본 폰트 색과 같은색으로 설정*/
+  /* color: red;
+  */
+}

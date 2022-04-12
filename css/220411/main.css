@@ -1,0 +1,60 @@
+img {
+  display: block;
+}
+
+.container {
+  background-color: royalblue;
+  /* container가 가지고있는 자식요소의 최솟값으로 지정 */
+  width: min-content;
+  perspective: 600px;
+  /* perspective-origin: 50% 0%; */
+  /* 자식 효과의 3d 효과를 그대로 적용하겠다 (기본값 : flat) */
+  /* transform-style: preserve-3d; */
+}
+
+.container img {
+  /* 전화효과를 가상요소가 아니라 오리지널에 부여 */
+  transition-duration: 1s;
+  /* 변환의 기준점 (기본값 50% 50%) */
+  /* transform-origin: 100% 0%; */
+
+  /* ANIMATION 애니메이션이라는 동작을 제어하는 속성
+  살재 애니메이션을 만드는건 @keyframes 
+
+  animation-name: none;
+  animation-duration: 0s;
+  animation-timing-function: ease;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: none;
+  animation-play-state: running;
+
+   animaiton */
+
+  animation-name: rolling;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
+  /* 애니 전후상태 */
+  animation-fill-mode: none; 
+  /* 애니 동작상태 */
+  animation-play-state: running;
+}
+
+.container:hover img {
+  /* pespective 함수는 제일 앞에 */
+  transform: rotateY(45deg);
+  animation-play-state: paused;
+}
+
+@keyframes rolling {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100px);
+  }
+}
