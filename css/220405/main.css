@@ -1,0 +1,74 @@
+  /* .parent{
+    width: 200px;
+    height: 200px;
+    background-color: orange;
+  }
+
+  .child{
+    width: 100px;
+    height: 100px;
+    background-color: red;
+  } */
+
+  /* .box1{
+    width: 100px;
+    height: 100px;
+    background-color: orange;
+    box-sizing: border-box;
+    padding: 20px;
+    border: 20px solid red;
+  }
+  
+  .box2{
+    width: 100px;
+    height: 100px;
+    background-color: orange;
+  } */
+
+  div {
+
+    /* 자간
+    letter-spacing: 10px;
+    띄어쓰기
+    word-spacing: 5px; */
+
+    /* 말줌임표
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; */
+    
+    /* width: 200px;
+    height: 200px;
+    background-color: url("https://heropy.blog/css/images/logo.png");
+    background-size: cover;
+    border: 4px solid; */
+
+    /* gradient
+     width: 200px;
+    height: 200px;
+    background-image: linear-gradient(45deg, blue,red); */
+    width: 600px;
+    margin: 0 auto;
+    padding-top: 70px;
+  }
+
+  div img{
+    width: 200px;
+    float: left;
+  }
+
+  .news img{
+
+  }
+
+  .container{
+
+  }
+
+  .container div{
+    width: 100px;
+    height: 100px;
+    margin: 20px;
+    background-color: blue;
+    float: left;
+  }

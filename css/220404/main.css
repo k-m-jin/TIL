@@ -1,0 +1,24 @@
+@import url("./sub.css");
+/* import
+내가 만든 css 파일일 경우 잘 안씀
+직렬 방식 */
+
+div > div:nth-child(3) {
+  background-color: red;
+}
+
+#heropy{
+  color: blue;
+}
+
+.heropy{
+  color: green !important;
+}
+
+div {
+  background-color: orange;
+  border: 
+    1px solid red,
+    10px dashed blue
+  ;
+}
