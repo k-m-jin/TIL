@@ -1,0 +1,20 @@
+{
+  "name": "220509",
+  "version": "1.0.0",
+  "description": "```js childEl.addEventListener(   \"click\",   (e) => {     e.stopPropagation();     // e.preventDefault();     console.log(\"child\");   },   {     //켑처옵션이 있는 핸들러를 지울때는 지우는 곳에서도 캡쳐옵션을 줘야함     capture: true,     //한번만 실행     once: true,     // 화면과 로직의 처리를 분리해줌     passive: true,   } ); ```",
+  "main": "main.js",
+  "scripts": {
+    "heropy": "sass main.scss:main.css",
+    "dev": "parcel index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.5.0",
+    "sass": "^1.51.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
