@@ -1,0 +1,11 @@
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+.cache
+node_modules/
+dist/
+npm-debug.log
+yarn-error.log
