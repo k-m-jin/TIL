@@ -1,24 +1,9 @@
-///////////promise
-function imageLoad(src) {
-  return new Promise((resolve, reject) => {
-    if (!src) {
-      reject("이미지 경로 없는디?");
-    }
-    const imgEl = document.createElement("img");
-    imgEl.src = src;
-    imgEl.addEventListener("load", () => {
-      resolve();
-    });
-  });
+async function getMovie() {
+  let res = await fetch("https://www.omdbapi.com?apikey=7035c60c&s=frozen");
+  res = await res.json(); //프로미스 인스턴스 를 반환
+  console.log(res); //영화정보
+  return res;
 }
 
-imageLoad()
-  .then()
-  .catch((e) => {
-    console.log(e);
-  });
-
-//macro task
-setTimeout(() => {
-  console.log(123);
-}, 0);
+const res = getMovie();
+console.log(res); // promise

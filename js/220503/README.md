@@ -1,6 +1,6 @@
 #
 
-일반 함수의 this 는 호출될떄
+일반 함수의 this 는 호출될 때 지정
 
 ```js
 function hello() {
@@ -143,7 +143,6 @@ class Fonty {
       color: "black",
     };
     // 옵션 병합
-    //quertselerAll 은 배열이 아님NodeList
     this.options = {
       ...defaultOptions,
       ...customOptions,
@@ -155,7 +154,6 @@ class Fonty {
 
   setStyle(style) {
     this.els.forEach((el) => {
-      // el.style.color = style.color;
       Object.assign(el.style, style);
     });
   }
@@ -175,7 +173,11 @@ class Fonty {
   // Setter
   set fontSize(value) {
     console.log("in Setter", value);
-    // this.options.fontSize = value
+    this.options.fontSize = value;
+    // 화면에 반영되게 하기위한 코드
+    this.setStyle({
+      fontSize: value,
+    });
   }
 }
 
@@ -191,17 +193,25 @@ const fonty = new Fonty(".font2", {
   color: "green",
 });
 
-// console.log(Fonty.getFamilies())
+// console.log(Fonty.getFamilies());
 
 document.querySelector("button").addEventListener("click", () => {
   // fonty.setStyle({
-  //   color: 'yellowgreen'
-  // })
-
-  // Fonty.setRed(fonty)
-
-  console.log(fonty.fontSize);
+  //   color: "yellowgreen",
+  // });
+  // Fonty.setRed(fonty);
+  // console.log(fonty.fontSize);
   fonty.fontSize = "99px";
+  console.log(fonty);
+});
+
+// 버튼을 클릭했을때 화면에 반영되려면
+
+document.querySelector("button").addEventListener("click", () => {
+  fonty.setStyle({
+    color: "yellowgreen",
+    fontSize: "99px",
+  });
 });
 ```
 
@@ -275,6 +285,8 @@ console.log(heropy.fullName);
 ```
 
 # shallow copy & deep copy
+
+- lodash 라이브러리 사용
 
 ```js
 const ref = {

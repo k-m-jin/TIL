@@ -23,3 +23,22 @@ console.log(data)
 }
 
 // getMovie()
+
+const promise = new Promise()
+
+function a(){
+  return new Promise(function (resolve){
+    setTimeout(() => {
+      console.log('A')
+      resolve()
+    }, 1000);
+  })
+}
+function b(){
+  return new Promise(resolve => {
+    setTimeout(() => {
+      console.log('A')
+      resolve()
+    }, 1000);
+  })
+}

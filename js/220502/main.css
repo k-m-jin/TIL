@@ -1,4 +1,4 @@
-.imge{
+.image{
   width: 360px;
   height: 200px;
   margin: 10px;
@@ -11,7 +11,7 @@
   align-items: center;
 }
 .image.done {
-  background-image: url(https://www.google.com/imgres?imgurl=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F24283C3858F778CA2E&imgrefurl=https%3A%2F%2Fblankspace-dev.tistory.com%2F200&tbnid=3bPYTaav1zN1YM&vet=12ahUKEwiPj_y-08D3AhVczYsBHQj6CcUQMygAegUIARDEAQ..i&docid=dV6WfPf3OJctQM&w=800&h=500&q=%EC%9D%B4%EB%AF%B8%EC%A7%80&ved=2ahUKEwiPj_y-08D3AhVczYsBHQj6CcUQMygAegUIARDEAQ);
+  background-image: url("https://gstatic.com/webp/gallery/1.jpg");
 }
 .image.done .loader {
   display: none;

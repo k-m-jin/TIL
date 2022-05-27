@@ -42,30 +42,31 @@ getMovie().then((res) => console.log(res));
 
 # 이미지로더
 
+- 콜백
+
 ```js
 function imageLoad(src, cb) {
   // 이미지 요소를 만들어서 메모리에서 가지고 있음
   const imgEl = document.createElement("img");
   imgEl.src = src;
-  //load 로드되면 click
+  //load : 로드되면 'click' 같은것
   imgEl.addEventListener("load", () => {
-    cb();
+    cb(); //cb가 여기서 실행
   });
 }
 
 const imgContainer = document.querySelector(".image");
-imageLoad(
-  "https://www.google.com/url?sa=i&url=https%3A%2F%2Fblankspace-dev.tistory.com%2Fm%2F200&psig=AOvVaw1lJHdCcWyIqKVMnRjZOFxI&ust=1651574375338000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCNCn9pHQwPcCFQAAAAAdAAAAABAD",
-  () => {
-    console.log("done");
-    imgContainer.classList.add("done");
-  }
-);
+imageLoad("https://gstatic.com/webp/gallery/1.jpg", () => {
+  console.log("done");
+  imgContainer.classList.add("done");
+});
 ```
+
+- Promise
 
 ```js
 //////////promise
-function imageLoad2(src) {
+function imageLoad(src) {
   return new Promise((resolve) => {
     const imgEl = document.createElement("img");
     imgEl.src = src;
@@ -75,28 +76,22 @@ function imageLoad2(src) {
   });
 }
 
-const imgContainer2 = document.querySelector(".image");
+const imgContainer = document.querySelector(".image");
 
-imageLoad2("소스").then(() => {
+///then
+imageLoad("https://gstatic.com/webp/gallery/1.jpg").then(() => {
   console.log("done");
-  imgContainer2.classList.add("done");
+  imgContainer.classList.add("done");
 });
 
-//////ayn
+//////async
 
 (async function () {
-  await imageLoad("소스");
+  await imageLoad("https://gstatic.com/webp/gallery/1.jpg");
+  //await : 서버에서 돌아오면 다음 실행
   console.log("done");
-  imgContainer2.classList.add("done");
+  imgContainer.classList.add("done");
 })();
-```
-
-```js
-
-```
-
-```js
-
 ```
 
 # movie.js
@@ -107,6 +102,7 @@ async function getMovie() {
   res = await res.json(); //프로미스 인스턴스 를 반환
   console.log(res); //영화정보
   return res;
+  // ===
   //  return new Promise(resolve => {
   //   resolve(res)
   // })
@@ -199,7 +195,7 @@ getMovie();
 
 ```js
 function getMovie() {
-  //.all static method 안에 있는 배열에 다 돌아오면 다음을 실행
+  //.all: static method 안에 있는 배열에 다 돌아오면 다음을 실행
   Promise.all([
     fetch("https://www.omdbapi.com?apikey=7035c60c&s=frozen").then((res) =>
       res.json()
@@ -353,4 +349,13 @@ function imageLoad(src) {
     });
   });
 }
+```
+
+# micro task macro task
+
+```js
+//macro task
+setTimeout(() => {
+  console.log(123);
+}, 0);
 ```

@@ -56,6 +56,8 @@ fetch("https://www.omdbapi.com?apikey=7035c60c&s=frozen&page=3")
 
 ## axios
 
+: fetch 함수 대신
+
 ```js
 axios({
   url: "https://www.omdbapi.com?apikey=7035c60c&s=frozen",
