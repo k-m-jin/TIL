@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./main.css" />
+    <script src="https://unpkg.com/vue@next"></script>
+    <script defer src="./main.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <input v-model="title" v-on:keydown.enter="searchMovies(true)" />
+      <button v-on:click="searchMovies(true)">Search!</button>
+      <ul>
+        <li v-for="movie in movies" :key="movie.imdbId">
+          <img v-bind:src="movie.Poster" height="40" />
+          {{ movie.Title }}
+        </li>
+      </ul>
+      <button v-if="movies.length" v-on:click="searchMovies()">More</button>
+      <h1>{{msg}}</h1>
+      <h2>{{reverseMsg()}}</h2>
+
+      <h3>{{reversedMsg}}</h3>
+      <button @click="reversedMsg = 12345">set</button>
+    </div>
+  </body>
+</html>
