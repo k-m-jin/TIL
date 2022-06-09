@@ -4,37 +4,26 @@
     name~
   </RouterLink>
   <RouterView />
-  <div>{{ message }}</div>
-  <div> {{ reversedMessage }} </div>
-  <button @click="reverseMessage">
-    reverse!
-  </button>
-  <!-- <button @click="messageStore.message = 'heropy?!?' ">
-    heropy
-  </button> -->
+  <input
+    type="file"
+    @change="selectFile" />
 </template>
 
 <script>
-import {mapState,mapActions} from 'pinia'
-import {useMessageStore} from '~/store/message'
-
 export default {
-  // created() {
-  //   console.log(this.$route)
-  // }
-
-  computed: {
-    ...mapState(useMessageStore, [
-      'message',
-      'reversedMessage'
-    ])
-  },
   methods: {
-    ...mapActions(useMessageStore,[
-      'reverseMessage'
-    ])
+    selectFile(event) {
+      console.log(event)
+      const reader = new FileReader()
+      for (const file of event.target.files) {
+        console.log(file)
+        reader.readAsDataURL(file)
+        reader.addEventListener('load', e => {
+            console.log(e)
+            console.log(e.target.result) //base64
+        })
+      }
+    }
   }
-
-
 }
 </script>

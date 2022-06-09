@@ -4,6 +4,7 @@ export const useMessageStore = defineStore('message', {
   //vuex 에서는 namespaced 가 필수
   state: () => ({
     message: 'hello World',
+    count: 1,
   }),
   getters: {
     reversedMessage(state) {
@@ -12,7 +13,11 @@ export const useMessageStore = defineStore('message', {
   },
   actions: {
     reverseMessage() {
+      this.helloWorld()
       this.message = this.message.split('').reverse().join('')
+    },
+    helloWorld() {
+      console.log('Hello world')
     },
   },
 })

@@ -5,6 +5,7 @@ import TheHeader from '~/components/TheHeader.vue'
 import Home from './Home.vue'
 import Movie from './Movie.vue'
 import About from './About.vue'
+// import AboutMapStores from './AboutMapStores.vue'
 import AboutName from './AboutName.vue'
 import NotFound from './NotFound.vue'
 
