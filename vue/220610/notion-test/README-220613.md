@@ -1,0 +1,443 @@
+# [Pinia](https://pinia.vuejs.org/introduction.html)
+
+피니아의 경우 타입스크립트를 도입하고 컴포지션 API를 적용하는 경우 그 장점이 확연하게 들어날 수 있습니다.
+
+## 1. core concepts
+
+**vuex**에서는core concepts로 `state`,`Getters`, `Mutations`, `Actions`, `Modules` 총 **5가지 개념**을 도입했습니다.
+
+**Pinia**에서는 `state`,`Getters`,`action`로 **세가지 개념**을 사용합니다. (모듈화는 필수적으로 적용되게 됩니다.)
+
+mutations이 없어 권한이 없어 사용하기 편한 대신에 그로인해 발생하는 에러에 대한 책임을 져야합니다.
+
+## 2. pinia 적용
+
+### 2-1 pinia설치
+
+```shell
+$ npm i pinia
+```
+
+### 2-2 store>index.js
+
+##### 🎨차이점 
+vuex를 사용할 때는 store폴더를 만들어 그 안에 index.js라는 기본 파일을 만들었습니다.
+
+만약, message라는 이름으로 모듈화를 하는 경우 store폴더 안에는 모듈이 하나더라도 message.js와 index.js파일로 총 2개의 파일이 존재해야했습니다.
+
+하지만, **pinia는 index.js 없이 모듈화된 파일만 있으면 됩니다.**
+
+#### 🎨차이점 
+또한 vuex에서는 모듈화된 파일의 상단에 `namedspaced:true`가 필요했습니다. 하지만 **피니아는 모듈이 기본 옵션**이기에 따로 필요하지 않습니다.
+
+**store>message.js**
+
+```js
+import {defineStore} from 'pinia'
+
+//이름을 가지는 내보내기
+//첫번쨰 인수로 사용하고자 하는 모듈의 이름을 넣어줘야합니다
+export const useMessageStore = defineStore('message'⭐,{
+  //화살표함수로 하면 좋습니다.
+  state: () => ({
+    message: 'Hello world!'
+  }),
+  getters: {
+    reversedMessage(state) {
+      return state.message.split('').reverse().join('')
+    }
+  },
+  actions: {
+    reverseMessage() {
+      //this로 접근
+      this.message = this.message.split('').reverse().join('')
+    }
+  },
+})
+```
+
+>🔑이름을 가지는 내보내기를 할 때 보통 이름 앞에 use를 붙여 사용합니다.
+
+
+#### 🎨공통점 : state
+
+vuex에서는 mutations에서 state에 접근하기 위해 state라는 매개변수를 사용했습니다. 마찬가지로 pinia에서도 getters에서 state에 접근하기 위해 state를 매개변수로 받습니다.
+
+
+#### 🎨차이점 : context
+
+vuex에서는 actions의 매개변수로 context(={state,getters,commit,dsipatch})를 사용했습니다.
+
+하지만 pinia에서는 this를 통해 보다 편하게 접근을 할 수 있습니다.
+
+
+### 2-2 store의 state를 가져오기
+
+#### 🎨vuex에서는
+
+vuex에서는 아래와 같이 state의 정보를 가져올 수 있었습니다.
+
+##### 1) 첫번째 방법
+```js
+computed: {
+  message() {
+    return this.$store.state.message.message
+  }
+}
+```
+
+만약 매핑을 하는 경우 아래와 같이 사용할 수 있었습니다.
+
+##### 2) 두번쨰 방법
+```js
+import {mapState} from 'vuex'
+
+computed: {
+  ...mapState('message', [
+      message
+    ]),
+}
+```
+
+#### 🎨pinia에서는
+
+하지만 pinia에서는 첫번째 방법은 사용을 할 수 없습니다
+
+**about.vue**
+
+```js
+import {mapState} from 'pinia' //1
+import {useMessageStore} from '~/store/message' //2
+
+export default {
+  computed: {
+    ...mapState(useMessageStore, [ //3
+      'message'
+    ])
+  }
+}
+```
+
+1. mapState을 사용하는 경우 마찬가지로 pinia에서 mapState를 가지고 와 등록하면 됩니다.
+
+2. 단 피니아는 모든 것이 모듈이기 때문에 그 모듈을 직접가져와야합니다.
+
+3. 그리고 vuex에서는 모듈이름이 들어갔던 자리에 모듈을 통채로 집어넣습니다
+
+### 2-3 피니아 등록하기
+
+**main.js**
+```js
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'✅
+import router from './routes'
+import '~/routes/guards'
+import App from './App.vue'
+
+createApp(App)
+  .use(createPinia())✅호출합니다
+  .use(router)
+  .mount('#app')
+```
+
+### 2-4 연결확인하기
+
+**About.vue**
+```html
+<template>
+  <h1>About!</h1>
+  <RouterLink to="/about/name">
+    Name~
+  </RouterLink>
+  <RouterView />
+  <div>{{ message }}</div>
+</template>
+```
+![](https://velog.velcdn.com/images/0seo8/post/2de02b64-63c6-40cb-ab0a-7ffcef20d133/image.png)
+
+### 2-5 store의 getters 가져오기
+
+#### 🎨vuex에서는
+
+```js
+import {mapState, mapGetters} from 'vuex'
+```
+와 같이 mapGetters를 가져왔습니다
+
+
+#### 🎨pinia에서는
+
+getter도 mapState에서 가지고 옵니다.
+```html
+<template>
+  <h1>About!</h1>
+  <RouterLink to="/about/name">
+    Name~
+  </RouterLink>
+  <RouterView />
+  <div>{{ message }}</div>
+  <div>{{ reversedMessage }}</div>
+</template>
+```
+```js
+<script>
+import {mapState} from 'pinia'
+import {useMessageStore} from '~/store/message'
+
+export default {
+  computed: {
+    ...mapState(useMessageStore, [
+      'message',
+      'reversedMessage'
+    ])
+  }
+}
+</script>
+```
+
+![](https://velog.velcdn.com/images/0seo8/post/71d481a5-963f-4fea-93fc-b09ac186e193/image.png)
+
+### 2-5 store의 actions 가져오기
+
+#### 🎨pinia에서는
+
+mapActions에서 actions를 가져올 수 있습니다.
+
+```html
+<template>
+  <h1>About!</h1>
+  <RouterLink to="/about/name">
+    Name~
+  </RouterLink>
+  <RouterView />
+  <div>{{ message }}</div>
+  <div>{{ reversedMessage }}</div>
+  <button @click="reverseMessage">
+    Reverse!!
+  </button>
+</template>
+```
+```js
+<script>
+import {mapState, mapActions✅} from 'pinia'
+import {useMessageStore} from '~/store/message'
+
+export default {
+  computed: {
+    ...mapState(useMessageStore, [
+      'message',
+      'reversedMessage'
+    ])
+  },
+  methods: {✅
+    ...mapActions(useMessageStore,[
+      'reverseMessage'
+    ])
+  }
+}
+</script>
+```
+
+### 2-6 mapStores
+
+**mapState, mapActions대신 사용할 수 있는 개념이 새로 나왔습니다.**
+
+**등록하는 방법**
+```js
+<script>
+import {mapStores} from 'pinia'
+import {useMessageStore} from '~/store/message'
+
+export default {
+  computed: {
+    ...mapStores([useMessageStore]) 
+  },
+}
+</script>
+```
+
+위와 같이 등록을 해줍니다.
+
+**사용하는 방법**
+```html
+<template>
+  <h1>About!</h1>
+  <RouterLink to="/about/name">
+    Name~
+  </RouterLink>
+  <RouterView />
+  <div>{{✅ messageStore.message }}</div>
+  <div>{{✅ messageStore.reversedMessage }}</div>
+  <button @click="✅messageStore.reverseMessage">
+    Reverse!!
+  </button>
+</template>
+```
+`useMessageStore`에서 use를 뺀 객체데이터를 붙여줍니다.
+
+`messageStore`라는 이름 범위 안에서 사용을 하기 때문에 관리가 조금 더 용이합니다.
+
+```html
+<button @click="messageStore.message='HEROPY?!@'">
+  HEROPY
+</button>
+```
+위와 같이 state의 데이터를 수정해버릴 수도 있습니다.
+
+# Pinia2
+
+## 🐥지난 시간 돌아보기
+
+### 1. getters와 actions의 store에 접근 방법
+```js
+  getters: {
+    reversedMessage(state) {
+      return state.message.split('').reverse().join('')
+    }
+  },
+  actions: {
+    reverseMessage() {
+      this.message = this.message.split('').reverse().join('')
+    },
+  }
+```
+
+왜 getters에서는 state로 접근을 하고 actions에서는 this로 접근을 하는 구조를 만들었는지는 강사님도 의문입니다!
+
+아무튼 getters에서는 **state**통해 접근을 하며 actions에서는 **this**를 통해 접근을 합니다.
+
+
+### 2. action에서 getters에 접근하는 법
+
+action안에서는 모두 this를 통해 접근한다고 생각하면 됩니다. 
+```js
+actions: {
+  reverseMessage() {
+    this.message = this.message.split('').reverse().join('')
+    //this를 통해 바로 helloWorld에 접근할 수 있습니다.
+    this.helloWorld()
+  },
+    helloWorld() {
+      console.log('Hello world')
+    }
+}
+```
+
+
+### 3. 네임스페이스
+#### About.vue
+
+```html
+<button @click="messageStore.message = 'HEROPY?!#'">
+  HEROPY!
+</button>
+```
+
+```js
+import { mapStores } from 'pinia'
+import { useMessageStore } from '~/store/message'
+
+export default {
+  computed: {
+    ...mapStores([useMessageStore])
+  }
+}
+```
+
+`messageStore`라는 네임스페이스를 통해 message에 바로 접근을 함으로써, message에 있는 그 상태를 갱신한다는 것을 바로 알 수 있습니다.
+
+즉, `messageStore.message`에서 message는 store에서 온 데이터라는 것을 쉽게 알 수 있습니다.
+
+**구분**
+만약, mapStores가 아닌 mapState로 매핑을 한 후 `@click="message='HROPY?!#'"`으로 사용을 했다면 store에서 온 데이터라는 것을 바로 알기 힘들었을 것입니다
+
+하지만 mapStores를 가져와 stores자체를 매핑함으로서 messageStore라는 네임스페이스를 사용함으로써  데이터를 추적하는데 많은 도움을 받을 수 있습니다.
+
+## 🐥1. $patch
+
+마찬가지로 `@click="messageStore.message = 'HEROPY?!#'"`와 같이 할당연산자를 통해 데이터를 바로 할당하면 추적에 어려움이 있기 때문에 `$patch`를 제공합니다.
+
+### 1-1 [Mutating the state](https://pinia.vuejs.org/core-concepts/state.html#mutating-the-state)
+
+`$patch`에는 두가지 사용 방법이 있습니다.(1) patch는 객체데이터 형식으로 데이터를 갱신하는 것 외에도 (2)다른 방식(콜백형식)을 제공합니다.
+
+#### 1번 방법
+
+```js
+created(){
+  this.messageStore.$patch({
+    message: 'Good!',
+  })
+}
+```
+#### 2번 방법
+
+```js
+this.messageStore.message='Good!'
+```
+
+둘의 코드는 같습니다. 단, 데이터 트래킹을 위해 1번처럼 작성하는 것을 권장합니다.
+
+
+```js
+cartStore.$patch((state) => {
+  state.items.push({ name: 'shoes', quantity: 1 })
+  state.hasChanged = true
+})
+```
+
+위 코드는 state(상태객체)가 들어오기 때문에 state객체에 push가 가능하다는 이점이 있습니다.
+
+만약, 어떤 상태를 갱신할때 그 상태를 계산하는 로직이 길어지는 경우 위와 같이 콜백을 통해 묶어 제공하면 상태가 어디서 변경되는지는 콜백영역만 확인하기 때문에 데이터트래킹에 유리하며 state객체에 push가 가능하다는 이점이 있습니다.
+
+## 🐥2. [$reset](https://pinia.vuejs.org/api/interfaces/pinia._StoreWithState.html#reset)
+
+```html
+  <div>{{ messageStore.count }}</div>
+  <button @click="updateStore">
+    HEROPY!
+  </button>
+```
+
+```js
+methods: {
+    updateStore(){
+      this.messageStore.$patch({
+        message:'Good!!',
+        count: 2
+      })
+    }
+  }
+```
+**초기값**
+![](https://velog.velcdn.com/images/0seo8/post/df1f89d4-64c6-41d9-9c67-0b993707aa9d/image.png)
+
+**reset을 사용하면 초기 값으로 언제든지 돌아갈 수 있습니다.**
+
+```html
+<button @click="resetStore">
+  RESET!
+</button>
+```
+
+```js
+  methods: {
+    updateStore(){
+      this.messageStore.$patch({
+        message:'Good!!',
+        count: 2
+      })
+    },
+    resetStore() {
+      this.messageStore.$reset()
+    }
+  }
+```
+
+vuex에서 이 기능을 구현하려면 여러모로 신경써야하는데, pinia는 reset기능을 통해 보다 편리하게 구현할 수 있습니다.
+
+**코드전체**
+![](https://velog.velcdn.com/images/0seo8/post/4cdbba78-1566-4b28-9dbc-583abdd07403/image.png)
+
+
+
