@@ -1,22 +1,19 @@
 <template>
   <ul>
-    <li
+    <WorkspaceItem
       v-for="workspace in workspaceStore.workspaces"
-      :key="workspace.id">
-      <RouterLink :to="`/workspaces/${workspace.id}`">
-        {{ workspace.title }}
-      </RouterLink>
-      <button @click="workspaceStore.deleteWorkspace(workspace.id)">
-        삭제
-      </button>
-    </li>
+      :key="workspace.id" 
+      :workspace="workspace" />
   </ul>
 </template>
 <script>
 import { mapStores } from 'pinia'
 import { useWorkspaceStore } from '~/store/workspace'
-
+import WorkspaceItem from './WorkspaceItem.vue'
 export default {
+  components: {
+    WorkspaceItem
+  },
   computed: {
     ...mapStores(useWorkspaceStore)
   },
