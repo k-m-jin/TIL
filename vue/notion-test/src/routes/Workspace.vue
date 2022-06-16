@@ -1,5 +1,5 @@
 <template>
-  <!-- <TheHeader /> -->
+  <TheHeader />
   <h1>Workspace!</h1>
   <button @click="workspaceStore.createWorkspace">
     워크스페이스 생성
@@ -47,12 +47,12 @@
 <script>
 import { mapStores } from 'pinia'
 import { useWorkspaceStore } from '~/store/workspace'
-// import TheHeader from '~/components/TheHeader.vue'
+import TheHeader from '~/components/TheHeader.vue'
 
 export default {
-  // components: { 
-  //   TheHeader
-  //  },
+  components: { 
+    TheHeader
+   },
     computed: {
         ...mapStores(useWorkspaceStore)
     },

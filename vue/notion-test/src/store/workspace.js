@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-// import router from '~/routers'
 
 export const useWorkspaceStore = defineStore('workspace', {
   state() {
@@ -8,6 +7,7 @@ export const useWorkspaceStore = defineStore('workspace', {
       workspace: {},
       workspaces: [],
       currentWorkspacePath: [],
+      workspacesLoaded: false,
     }
   },
   getters: {},
@@ -15,7 +15,7 @@ export const useWorkspaceStore = defineStore('workspace', {
     //C
     async createWorkspace(payload = {}) {
       const { parentId } = payload
-      await request({
+      const workspace = await request({
         method: 'POST',
         body: {
           //워크스페이스가 생성될땐 내용이 없음.
@@ -24,6 +24,8 @@ export const useWorkspaceStore = defineStore('workspace', {
         },
       })
       this.readWorkspaces()
+      //this.$router
+      window.location.href = `/workspaces/${workspace.id}`
     },
     //R
     async readWorkspaces() {
@@ -33,6 +35,11 @@ export const useWorkspaceStore = defineStore('workspace', {
       console.log(workspaces)
 
       this.workspaces = workspaces
+      this.workspacesLoaded = true
+
+      if (!this.workspaces.length) {
+        this.createWorkspace()
+      }
     },
 
     async readWorkspace(id) {
@@ -69,23 +76,24 @@ export const useWorkspaceStore = defineStore('workspace', {
       this.readWorkspaces()
     },
 
-    // findWorkspacePath() {
-    //   // router.currentRoute.value === $route
-    //   const currentWorkspaceId = router.currentRoute.value.params.id
-    //   function find(workspace, parents) {
-    //     if (currentWorkspaceId === workspace.id) {
-    //       this.currentWorkspacePath = [...parents, workspace]
-    //     }
-    //     if (workspace.children) {
-    //       workspace.children.forEach((ws) => {
-    //         find(ws, [...parents, workspace])
-    //       })
-    //     }
-    //   }
-    //   this.workspaces.forEach((workspace) => {
-    //     find(workspace, [])
-    //   })
-    // },
+    findWorkspacePath(currentWorkspaceId) {
+      // router.currentRoute.value === $route
+      // error
+      // const currentWorkspaceId = router.currentRoute.value.params.id
+      const find = (workspace, parents) => {
+        if (currentWorkspaceId === workspace.id) {
+          this.currentWorkspacePath = [...parents, workspace]
+        }
+        if (workspace.children) {
+          workspace.children.forEach((ws) => {
+            find(ws, [...parents, workspace])
+          })
+        }
+      }
+      this.workspaces.forEach((workspace) => {
+        find(workspace, [])
+      })
+    },
   },
 })
 
