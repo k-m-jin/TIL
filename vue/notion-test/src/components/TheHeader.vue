@@ -29,6 +29,7 @@ export default {
     workspacesLoaded(value){
     value && this.workspaceStore.findWorkspacePath(this.$route.params.id)
     },
+    //페이지 바뀔때마다 
     $route() {
       this.workspaceStore.findWorkspacePath(this.$route.params.id)
     }

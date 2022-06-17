@@ -41,7 +41,7 @@ export const useWorkspaceStore = defineStore('workspace', {
         this.createWorkspace()
       }
     },
-
+    // 상세페이지
     async readWorkspace(id) {
       const workspace = await request({
         method: 'GET',
@@ -75,13 +75,15 @@ export const useWorkspaceStore = defineStore('workspace', {
       })
       this.readWorkspaces()
     },
-
+    //경로
     findWorkspacePath(currentWorkspaceId) {
       // router.currentRoute.value === $route
       // error
       // const currentWorkspaceId = router.currentRoute.value.params.id
       const find = (workspace, parents) => {
         if (currentWorkspaceId === workspace.id) {
+          console.log('부모', parents)
+          //return???
           this.currentWorkspacePath = [...parents, workspace]
         }
         if (workspace.children) {

@@ -54,6 +54,7 @@ export default {
     TheHeader
    },
     computed: {
+      // 스토어를 풀어헤져주는 것 = 엑세스 권한 부여
         ...mapStores(useWorkspaceStore)
     },
     watch: {
@@ -86,10 +87,14 @@ export default {
         },
         selectPoster(event) {
             const { files } = event.target
+  
             for (const file of files) {
+              console.log('파일', file)
+              console.log('파일s', files)
                 const reader = new FileReader()
                 reader.readAsDataURL(file)
                 reader.addEventListener('load', e => {
+                  console.log('디스',this.workspaceStore)
                     this.workspaceStore.updateWorkspace({
                         id: this.$route.params.id,
                         poster: e.target.result

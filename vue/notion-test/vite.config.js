@@ -7,4 +7,12 @@ export default defineConfig({
   resolve: {
     alias: [{ find: '~', replacement: `${__dirname}/src` }],
   },
+  css: {
+    //전역등록
+    preprocessorOptions: {
+      scss: {
+        additionalData: '@import "~/scss/variables";',
+      },
+    },
+  },
 })
