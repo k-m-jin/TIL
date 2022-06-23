@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "ES5",
+    "outDir": "dist",
+    "baseUrl": "./"
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}
