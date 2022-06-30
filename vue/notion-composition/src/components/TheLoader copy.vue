@@ -20,11 +20,12 @@
   </div>
 </template>
 
-<script setup lang="ts">
-// import {defineProps} from 'vue'
-defineProps({
-  //defineProps : 프롭스를 정의하고 템플릿에서 사용가능 스크립트x
-  loading: {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  props: {
+    loading: {
       type: Boolean,
       default: true
     },
@@ -52,9 +53,8 @@ defineProps({
       type: Boolean,
       default: false
     }
-  })
-
-  defineEmits(['update:modelValue'])
+  }
+})
 </script>
 
 <style lang="scss" scoped>
