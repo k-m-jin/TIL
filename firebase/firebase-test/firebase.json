@@ -24,13 +24,13 @@
   },
   "emulators": {
     "auth": {
-      "port": 9099
+      "port": 9098
     },
     "functions": {
       "port": 5001
     },
     "firestore": {
-      "port": 8080
+      "port": 8081
     },
     "database": {
       "port": 9000
@@ -39,7 +39,7 @@
       "port": 5050
     },
     "pubsub": {
-      "port": 8085
+      "port": 8084
     },
     "storage": {
       "port": 9199
