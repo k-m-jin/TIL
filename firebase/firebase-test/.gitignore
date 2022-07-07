@@ -105,3 +105,6 @@ docs/_book
 test/
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,vue,firebase,visualstudiocode
+
+#
+.env

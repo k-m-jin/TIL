@@ -1,0 +1,20 @@
+{
+  "name": "image.jpg",
+  "bucket": "images",
+  "contentType": "image/jpeg",
+  "metageneration": 1,
+  "generation": 1657195476349,
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "cacheControl": "public, max-age=3600",
+  "contentEncoding": "identity",
+  "downloadTokens": [
+    "24818a88-62e0-48f2-a71f-b405fe92701e"
+  ],
+  "etag": "dK1XF4IpcBTNFDowVNrv1rxfBA8",
+  "timeCreated": "2022-07-07T12:04:36.348Z",
+  "updated": "2022-07-07T12:04:36.351Z",
+  "size": 17866,
+  "md5Hash": "sRivtRY2bNpyPpJEGtrb0g==",
+  "crc32c": "1278240354"
+}

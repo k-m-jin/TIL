@@ -1,6 +1,6 @@
 import * as admin from 'firebase-admin'
 import * as express from 'express'
-
+import {saveFile} from '../utils'
 
 const db = admin.firestore()
 const router = express.Router()
@@ -8,6 +8,7 @@ const router = express.Router()
 interface Todo {
   id?:string
   title: string
+  image: string | null
   done: boolean
   createdAt: string
   updatedAt: string
@@ -15,26 +16,6 @@ interface Todo {
 }
 
 //Job
-async function addDeleted() {
-  const snaps = await db.collection('Todos').get()
-  
-  //snap 안에 docs 에 유사배열 이 있음
-  for ( const snap of snaps.docs ) {
-    snap.ref.update({
-      deleted: false
-    })
-  }
-  console.log('done!')
-
-
-  // //forEach 가 콜백의 비동기를 보장하지 않음
-  // snaps.forEach(async snap => {
-  //   await snap.ref.update({
-  //     deleted: false
-  //   })
-  // })
-}
-// addDeleted()
 
 // 투두 조회
 // http://localhost:5001/kdt2-test/us-central1/api/todo
@@ -72,12 +53,19 @@ router.get('/', async (req, res) => {
 
 //투두 추가
 router.post('/', async (req,res)=> {
-  const {title} = req.body
+  const {title, imageBase64} = req.body
+  const date = new Date().toISOString()
+  
+  //스토리지에 파일 저장 
+  // await 가 없으면 promise 반환
+  const image = await saveFile(imageBase64)
+
   const todo: Todo = {
     title,
+    image,
     done: false,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    createdAt: date,
+    updatedAt: date,
     deleted: false
   }
   
@@ -92,7 +80,7 @@ router.post('/', async (req,res)=> {
 
 //투두 수정
 router.put('/:id', async (req, res) => {
- const { title, done } = req.body
+ const { title, done, imageBase64 } = req.body
  const { id } = req.params
 
  //snap : 디비에서 찾은 정보
@@ -102,12 +90,16 @@ router.put('/:id', async (req, res) => {
   return res.status(404).json('존재하지 않는 정보입니다.')
   }
 
+  //스토리지에 파일 저장
+  const image = await saveFile(imageBase64)
+
  const { createdAt } = snap.data() as Todo
  const updatedAt = new Date().toDateString()
 
  await snap.ref.update({
   title,
   done,
+  image,
   updatedAt
  })
  
@@ -115,6 +107,7 @@ router.put('/:id', async (req, res) => {
   id: snap.id,
   title,
   done,
+  image,
   createdAt,
   updatedAt
  })
