@@ -58,7 +58,12 @@ router.post('/', async (req,res)=> {
   
   //스토리지에 파일 저장 
   // await 가 없으면 promise 반환
-  const image = await saveFile(imageBase64)
+  let image = ''
+  try {
+    image = await saveFile(imageBase64)
+  } catch (error) {
+    console.log(error)
+  }
 
   const todo: Todo = {
     title,

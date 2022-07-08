@@ -4,8 +4,8 @@
 //초기화가 제일 위에 있어야함 관리자 권한
 import * as admin from 'firebase-admin'
 admin.initializeApp()
-import * as dotenv from 'dotenv'
-dotenv.config()
+// import * as dotenv from 'dotenv'
+// dotenv.config()
 
 import * as functions from 'firebase-functions'
 import * as express from 'express'
