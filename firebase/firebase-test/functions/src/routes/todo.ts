@@ -53,6 +53,11 @@ router.get('/', async (req, res) => {
 
 //투두 추가
 router.post('/', async (req,res)=> {
+  const {apikey, username} = req.headers
+
+  if (apikey !== '1234' || username !== 'heropy-admin') {
+    res.status(401).json('유효한 사용자가 아닙니다.')
+  }
   const {title, imageBase64} = req.body
   const date = new Date().toISOString()
   

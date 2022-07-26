@@ -6,6 +6,9 @@ import { defineComponent } from 'vue';
 import axios from 'axios'
 
 export default defineComponent({
+  created(){
+    console.log(import.meta.env.DEV)
+  },
   methods: {
     selectFile(event : Event) {
       const files = (event.target as HTMLInputElement).files as FileList
@@ -15,8 +18,11 @@ export default defineComponent({
         reader.readAsDataURL(file)
         reader.addEventListener('load', async e => {
           console.log((e.target as FileReader).result)
+            const url = import.meta.env.DEV
+            ? 'http://localhost:5001/kdt2-test/us-central1/api/todo'
+            :'https://us-central1-kdt2-test.cloudfunctions.net/api/todo'
           const {data} = await axios({
-            url: 'http://localhost:5001/kdt2-test/us-central1/api/todo',
+            url,
             method: 'POST',
             data: {
               title: '파일추가',

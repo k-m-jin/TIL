@@ -33,6 +33,7 @@
       class="no-children">
       하위 페이지가 없습니다.
     </div>
+    <!-- 재귀 컴포넌트 -->
     <ul v-if="workspace.children && showChildren">
       <WorkspaceItem
         v-for="ws in workspace.children"

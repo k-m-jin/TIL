@@ -16,7 +16,9 @@ import todo from './routes/todo'
 const app = express()
 app.use(express.json())
 //모든 요청 허용
-app.use(cors())
+app.use(cors({
+  origin: ['http://localhost:3000','http://kdt2-test.web.app','http://kdt2-test.firebaseapp.com']
+}))
 app.use('/todo', todo)
 
 
@@ -24,6 +26,6 @@ app.use('/todo', todo)
 //   functions.logger.info('Hello logs!', {structuredData: true})
 //   response.send('Hello from Firebase!')
 // })
-export const api = functions.https.onRequest(app)
+export const api = functions.region('asia-northeast3').https.onRequest(app)
 // http://localhost:5001/kdt-test-9f352/us-central1/api/todo
 // https://us-central1-kdt-test-9f352.cloudfunctions.net/api/todo

@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid'
 // import validator from 'validator'
 import * as FileType from 'file-type'
 
-export async function saveFile(base64: string , bucketName = 'images') {
+export async function saveFile(base64: string , bucketName = 'kdt2-test ') {
   //스토리지에 파일 저장
   //버킷: 스토리지에서 관리하는 폴더 느낌
   const bucket = admin.storage().bucket(bucketName)
@@ -16,7 +16,7 @@ export async function saveFile(base64: string , bucketName = 'images') {
   const buffer = Buffer.from(body, 'base64')
   const byteLength =  Buffer.byteLength(buffer)
   if( 10 * 1024 * 1024 < byteLength) {
-    throw{ststus: 400, message: '제한 용량 초과'}
+    throw{ststus: 400, message: '제한 용량 초과'} 
   }
 
   const {ext} = await FileType.fromBuffer(buffer) as { ext:string }
