@@ -1,18 +1,20 @@
-import Intro from './component/Intro'
-import Clock from './component/Clock'
-import Board from './component/Board'
-import Test from './component/Test'
+import Loading from './component/220727/Loading'
+import Prc from './component/220727/Prc'
+import Timer from './component/220727/Timer'
+import Handlers from './component/220727/Handlers'
+import Login from './component/220727/Login'
+import Refs from './component/220727/Refs'
+import Test from './component/220726/Test'
 
 function App() {
   return (
     <div>
-      <Intro name='김명진' age='25' email='mem@naver.com' />
-
-      <Clock newTz='Asia/Seoul' />
-      <Clock newTz='Asia/Taipei' />
-
-      <Board category='영화' />
-
+      {/* <Loading />
+      <Prc />
+      <Timer s={30} /> */}
+      {/* <Handlers />
+      <Login /> */}
+      <Refs />
       <Test />
     </div>
   )

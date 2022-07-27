@@ -19,7 +19,14 @@ function Test() {
           <div key={times.id}>
             <div>{time.tz}</div>
             <p>{moment().tz(time.tz).format('YYYY-MM-DD HH:mm:ss')}</p>
-            <button onClick={() => buttonDelete(times.id)}>제거하기</button>
+            <button onClick={() => buttonDelete(time.id)}>제거하기</button>
+            <button
+              onClick={() => {
+                setTimes(times.filter((t) => t.id !== time.id))
+              }}
+            >
+              delete
+            </button>
           </div>
         )
       })}

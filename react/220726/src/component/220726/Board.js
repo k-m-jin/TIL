@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { data } from '../constant/data'
+import { data } from '../../constant/data'
 
 function Board(props) {
   const { category } = props
