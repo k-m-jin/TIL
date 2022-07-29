@@ -1,21 +1,18 @@
-import Loading from './component/220727/Loading'
-import Prc from './component/220727/Prc'
-import Timer from './component/220727/Timer'
-import Handlers from './component/220727/Handlers'
-import Login from './component/220727/Login'
-import Refs from './component/220727/Refs'
-import Test from './component/220726/Test'
+// import Refs from './component/220727/Refs'
+// import Test from './component/220726/Test'
+import StyleTest from './component/220729/StyleTest'
+import Button from './component/220729/Button'
 
 function App() {
   return (
     <div>
-      {/* <Loading />
-      <Prc />
-      <Timer s={30} /> */}
-      {/* <Handlers />
-      <Login /> */}
-      <Refs />
-      <Test />
+      {/* <Refs />
+      <Test /> */}
+
+      <StyleTest />
+
+      <Button />
+      {/* <Button size="large" bg="red" /> */}
     </div>
   )
 }
