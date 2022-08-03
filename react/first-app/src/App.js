@@ -1,19 +1,13 @@
-// import Refs from './component/220727/Refs'
-// import Test from './component/220726/Test'
-import StyleTest from './component/220729/StyleTest'
-import Button from './component/220729/Button'
+import { ThemeProvider } from 'styled-components'
+import theme from './styles/theme'
+import TodoLIst from './component/220729/TodoList'
 
 function App() {
   return (
-    <div>
-      {/* <Refs />
-      <Test /> */}
-
-      <StyleTest />
-
-      <Button />
-      {/* <Button size="large" bg="red" /> */}
-    </div>
+    <ThemeProvider theme={theme}>
+      {/* <GlobalStyle /> */}
+      <TodoLIst />
+    </ThemeProvider>
   )
 }
 

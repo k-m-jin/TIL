@@ -1,4 +1,14 @@
-import styled from 'styled-component'
+import styled, { keyframes } from 'styled-component'
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    
+  }
+`
 
 export const Button = styled.Button`
   outline: none;
@@ -7,8 +17,10 @@ export const Button = styled.Button`
   display: flex;
   align-items: center;
   justify-content: center;
+  ${({ theme }) => theme.common.flexCenter}
 
-  background-color: ${(props) => props.color || 'blue'};
+  background-color: ${(isClicked) => (isClicked ? 'gray' : 'blue')};
+  /* background-color: ${({ theme }) => theme.palette.orange}; */
   border-radius: 10px;
   color: white;
   width: 100px;
@@ -18,4 +30,8 @@ export const Button = styled.Button`
     opacity: 0.5;
   }
   cursor: pointer;
+
+  animation-name: ${fadeIn};
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
 `
