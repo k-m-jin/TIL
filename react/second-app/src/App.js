@@ -10,8 +10,8 @@ function App() {
         <UserList />
       </UserProvider> */}
 
-      {/* <Axiosprc /> */}
-      <Weather />
+      {/* <Axiosprc />
+      <Weather /> */}
     </div>
   )
 }
