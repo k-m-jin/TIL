@@ -30,5 +30,12 @@
       "body": "ㄴㅇㄹㄴㅇㄹ",
       "id": 7
     }
+  ],
+  "users": [
+    {
+      "email": "123@naver.com",
+      "password": "$2a$10$cmK9qKSE3LWdp5NpUXtI3uhjK/hN7do3um2jdtnK0Znk7W7iosyyi",
+      "id": 1
+    }
   ]
 }
